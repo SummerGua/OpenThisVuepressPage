@@ -1,51 +1,78 @@
 {
   "name": "openthisvuepresspage",
-	"displayName": "OpenThisVuepressPage",
-	"description": "You can open the web page corresponding to currently opened markdown file.",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.68.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-        "onCommand:openthisvuepresspage.helloWorld"
-	],
-	"main": "./dist/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "openthisvuepresspage.helloWorld",
-				"title": "Hello World"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run package",
-		"compile": "webpack",
-		"watch": "webpack --watch",
-		"package": "webpack --mode production --devtool hidden-source-map",
-		"compile-tests": "tsc -p . --outDir out",
-		"watch-tests": "tsc -p . -w --outDir out",
-		"pretest": "npm run compile-tests && npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/vscode": "^1.68.0",
-		"@types/glob": "^7.2.0",
-		"@types/mocha": "^9.1.1",
-		"@types/node": "16.x",
-		"@typescript-eslint/eslint-plugin": "^5.30.0",
-		"@typescript-eslint/parser": "^5.30.0",
-		"eslint": "^8.18.0",
-		"glob": "^8.0.3",
-		"mocha": "^10.0.0",
-		"typescript": "^4.7.4",
-		"ts-loader": "^9.3.1",
-		"webpack": "^5.73.0",
-		"webpack-cli": "^4.10.0",
-		"@vscode/test-electron": "^2.1.5"
-	}
+  "displayName": "OpenThisVuepressPage",
+  "description": "You can open the web page corresponding to currently opened markdown file.",
+  "version": "1.0.0",
+  "publisher": "SummerGua",
+  "repository": "https://github.com/SummerGua/OpenThisVuepressPage",
+  "engines": {
+    "vscode": "^1.68.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "vuepress"
+  ],
+  "activationEvents": [
+    "onCommand:openthisvuepresspage.helloWorld"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "openthisvuepresspage.helloWorld",
+        "title": "Open This Vuepress Page In Default Browser"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == markdown",
+          "command": "openthisvuepresspage.helloWorld",
+          "group": "open-this-vuepress-page"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "OpenThisVuepressPage",
+      "properties": {
+        "openthisvuepresspage.vuepressBase": {
+          "type": "string",
+          "default": "/",
+          "description": "Page will be opened in http://localhost:8080/base/..."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.68.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.18.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "open": "^8.4.0"
+  }
 }
