@@ -1,32 +1,63 @@
 import * as vscode from 'vscode';
-import { currentPageUri, getBase } from './utils';
+import { currentPageUri, cutFileUri, getBase, getCommand, getHttpPath, getPort, runCommanInTerminal } from './utils';
+const tcpPortUsed = require('tcp-port-used');
 const open = require('open');
 
 export function activate(context: vscode.ExtensionContext) {
-	
-	let realPath: string;
 
-	let disposable = vscode.commands.registerCommand('openthisvuepresspage.helloWorld', () => {
+  let path: string;
 
-		let base = getBase();
+  let openActivePage = vscode.commands.registerCommand('openthisvuepresspage.openActivePage', () => {
 
-		vscode.window.showInformationMessage(`Your current base is${base}, you can change it in VSCode setting`);
+    let base = getBase();
+    let port = getPort();
+    let command: string = getCommand();
 
-		if (currentPageUri() !== null) {
-			realPath = currentPageUri()?.split('docs/')[1]!;
-			realPath = realPath.replace('.md', '.html');
-		}
-		if (base === '/') {
-			realPath = 'http://localhost:8080/' + realPath;
-		} else {
-			realPath = 'http://localhost:8080/'+ base + '/' + realPath;
-		}
-		open(realPath);
-		realPath = '';
-	});
+    vscode.window.showInformationMessage(`Current base is "${base}", port is ${port}`);
 
-	context.subscriptions.push(disposable);
+    if (currentPageUri()) {
+      path = cutFileUri(currentPageUri()!);
+      path = getHttpPath(port, base, path);
+    } else {
+      vscode.window.showErrorMessage(`Can't get current uri!`);
+      return;
+    }
+
+    tcpPortUsed.check(port, '127.0.0.1').then((inUse: boolean) => {
+      if (inUse) {
+        open(path);
+        path = '';
+      } else {
+        runCommanInTerminal(command);
+        open(path);
+        path = '';
+      }
+    });
+  });
+
+  let openExplorer = vscode.commands.registerCommand('openthisvuepresspage.openExlorer', (uri: vscode.Uri) => {
+
+    let base: string = getBase();
+    let port: number = getPort();
+    let command: string = getCommand();
+
+    vscode.window.showInformationMessage(`Current base is '${base}', port is ${port}`);
+
+    let path = cutFileUri(uri.fsPath);
+    path = getHttpPath(port, base, path);
+
+    tcpPortUsed.check(port, '127.0.0.1').then((inUse: boolean) => {
+      if (inUse) {
+        open(path);
+        path = '';
+      } else {
+        runCommanInTerminal(command);
+        open(path);
+        path = '';
+      }
+    });
+  });
+
+  context.subscriptions.push(openActivePage);
+  context.subscriptions.push(openExplorer);
 }
-
-// this method is called when your extension is deactivated
-export function deactivate() {}
