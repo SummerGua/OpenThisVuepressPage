@@ -2,7 +2,7 @@
   "name": "openthisvuepresspage",
   "displayName": "OpenThisVuepressPage",
   "description": "You can open the web page corresponding to currently opened markdown file.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "SummerGua",
   "repository": "https://github.com/SummerGua/OpenThisVuepressPage",
   "engines": {
