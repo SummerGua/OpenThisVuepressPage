@@ -13,8 +13,6 @@ export function activate(context: vscode.ExtensionContext) {
     let port = getPort();
     let command: string = getCommand();
 
-    vscode.window.showInformationMessage(`Current base is "${base}", port is ${port}`);
-
     if (currentPageUri()) {
       path = cutFileUri(currentPageUri()!);
       path = getHttpPath(port, base, path);
@@ -40,8 +38,6 @@ export function activate(context: vscode.ExtensionContext) {
     let port: number = getPort();
     let command: string = getCommand();
 
-    vscode.window.showInformationMessage(`Current base is '${base}', port is ${port}`);
-
     let path = cutFileUri(uri.fsPath);
     path = getHttpPath(port, base, path);
 
@@ -50,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showInformationMessage(`Server auto started. Please wait a few seconds for it.`);
       runCommandInTerminal(command);
     }
-    
+
     vscode.window.activeTerminal?.show();
     open(path);
     path = '';

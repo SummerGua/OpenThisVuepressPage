@@ -95,7 +95,6 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "net": "^1.0.2",
     "open": "^8.4.0",
     "tcp-port-used": "^1.0.2"
   }
