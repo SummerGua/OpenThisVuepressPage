@@ -4,7 +4,7 @@ You can open current vuepress page in your default browser.
 
 ## Extension Settings
 
-> You can change the `base` property in VSCode setting (shortcut: `Ctrl ,`) according to your `config.ts` or `config.js`
+> You can change the `base`, `port`, `command` in VSCode setting (shortcut: `Ctrl ,`) according to your `config.ts` or `config.js`
 
 ## Usage
 1. Run your vuepress project on default 8080 port
@@ -25,3 +25,7 @@ Update README & CHANGELOG
 Add more function:
 1. Right-click the markdown file in explorer
 2. Auto run command if the project hasn't been run
+
+## 2.0.1
+
+Better Code

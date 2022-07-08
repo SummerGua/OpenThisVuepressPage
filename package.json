@@ -16,7 +16,7 @@
   ],
   "activationEvents": [
     "onCommand:openthisvuepresspage.openActivePage",
-    "onCommand:openthisvuepresspage.openExlorer"
+    "onCommand:openthisvuepresspage.openExplorer"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -26,7 +26,7 @@
         "title": "Open This Vuepress Page In Default Browser"
       },
       {
-        "command": "openthisvuepresspage.openExlorer",
+        "command": "openthisvuepresspage.openExplorer",
         "title": "Open This Vuepress Page In Default Browser"
       }
     ],
@@ -41,7 +41,7 @@
       "explorer/context": [
         {
           "when": "resourceLangId == markdown",
-          "command": "openthisvuepresspage.openExlorer",
+          "command": "openthisvuepresspage.openExplorer",
           "group": "open-this-vuepress-page"
         }
       ]

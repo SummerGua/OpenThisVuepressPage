@@ -39,7 +39,7 @@ export function getHttpPath(port: number, base: string, path: string): string {
   }
 }
 
-export function runCommanInTerminal(command: string): void {
+export function runCommandInTerminal(command: string): void {
   if(vscode.window.activeTerminal === undefined) {
     const terminal = vscode.window.createTerminal();
     terminal.sendText(command);

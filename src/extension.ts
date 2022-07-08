@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { currentPageUri, cutFileUri, getBase, getCommand, getHttpPath, getPort, runCommanInTerminal } from './utils';
+import { currentPageUri, cutFileUri, getBase, getCommand, getHttpPath, getPort, runCommandInTerminal } from './utils';
 const tcpPortUsed = require('tcp-port-used');
 const open = require('open');
 
@@ -7,7 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   let path: string;
 
-  let openActivePage = vscode.commands.registerCommand('openthisvuepresspage.openActivePage', () => {
+  let openActivePage = vscode.commands.registerCommand('openthisvuepresspage.openActivePage', async () => {
 
     let base = getBase();
     let port = getPort();
@@ -23,19 +23,18 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    tcpPortUsed.check(port, '127.0.0.1').then((inUse: boolean) => {
-      if (inUse) {
-        open(path);
-        path = '';
-      } else {
-        runCommanInTerminal(command);
-        open(path);
-        path = '';
-      }
-    });
+    const inUse = await tcpPortUsed.check(port, '127.0.0.1');
+    if (!inUse) {
+      vscode.window.showInformationMessage(`Server auto started. Please wait a few seconds for it.`);
+      runCommandInTerminal(command);
+    }
+
+    vscode.window.activeTerminal?.show();
+    open(path);
+    path = '';
   });
 
-  let openExplorer = vscode.commands.registerCommand('openthisvuepresspage.openExlorer', (uri: vscode.Uri) => {
+  let openExplorer = vscode.commands.registerCommand('openthisvuepresspage.openExplorer', async (uri: vscode.Uri) => {
 
     let base: string = getBase();
     let port: number = getPort();
@@ -46,16 +45,15 @@ export function activate(context: vscode.ExtensionContext) {
     let path = cutFileUri(uri.fsPath);
     path = getHttpPath(port, base, path);
 
-    tcpPortUsed.check(port, '127.0.0.1').then((inUse: boolean) => {
-      if (inUse) {
-        open(path);
-        path = '';
-      } else {
-        runCommanInTerminal(command);
-        open(path);
-        path = '';
-      }
-    });
+    const inUse = await tcpPortUsed.check(port, '127.0.0.1');
+    if (!inUse) {
+      vscode.window.showInformationMessage(`Server auto started. Please wait a few seconds for it.`);
+      runCommandInTerminal(command);
+    }
+    
+    vscode.window.activeTerminal?.show();
+    open(path);
+    path = '';
   });
 
   context.subscriptions.push(openActivePage);
