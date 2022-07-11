@@ -1,15 +1,8 @@
 import * as vscode from 'vscode';
 
-export function currentPageUri() {
-  return vscode.window.activeTextEditor
-    && vscode.window.activeTextEditor.document
-    && vscode.window.activeTextEditor.document.uri
-    && vscode.window.activeTextEditor.document.uri.path;
+export function currentPageUri(): string | undefined {
+  return vscode.window.activeTextEditor?.document?.uri?.path;
 };
-
-export function rightClickPageUri() {
-  return vscode.window.onDidChangeActiveTextEditor.toString();
-}
 
 // get base string from setting
 export function getBase(): string {
@@ -31,16 +24,12 @@ export function cutFileUri(uri: string): string {
   return uri.replace(/\\/g, '/').split('docs/')[1].replace('.md', '.html');
 }
 
-export function getHttpPath(port: number, base: string, path: string): string {
-  if (base === '/') {
-    return `http://localhost:${port}/${path}`;
-  } else {
-    return `http://localhost:${port}/${base}/${path}`;
-  }
+export function getFullHttpPath(port: number, base: string, path: string): string {
+  return base === '/' ? `http://localhost:${port}/${path}` : `http://localhost:${port}/${base}/${path}`;
 }
 
 export function runCommandInTerminal(command: string): void {
-  if(vscode.window.activeTerminal === undefined) {
+  if (vscode.window.activeTerminal === undefined) {
     const terminal = vscode.window.createTerminal();
     terminal.sendText(command);
   } else {

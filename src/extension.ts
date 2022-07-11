@@ -1,21 +1,20 @@
 import * as vscode from 'vscode';
-import { currentPageUri, cutFileUri, getBase, getCommand, getHttpPath, getPort, runCommandInTerminal } from './utils';
+import { currentPageUri, cutFileUri, getBase, getCommand, getFullHttpPath, getPort, runCommandInTerminal } from './utils';
 const tcpPortUsed = require('tcp-port-used');
 const open = require('open');
 
 export function activate(context: vscode.ExtensionContext) {
 
-  let path: string;
-
   let openActivePage = vscode.commands.registerCommand('openthisvuepresspage.openActivePage', async () => {
 
+    let path: string;
     let base = getBase();
     let port = getPort();
     let command: string = getCommand();
 
     if (currentPageUri()) {
       path = cutFileUri(currentPageUri()!);
-      path = getHttpPath(port, base, path);
+      path = getFullHttpPath(port, base, path);
     } else {
       vscode.window.showErrorMessage(`Can't get current uri!`);
       return;
@@ -34,12 +33,13 @@ export function activate(context: vscode.ExtensionContext) {
 
   let openExplorer = vscode.commands.registerCommand('openthisvuepresspage.openExplorer', async (uri: vscode.Uri) => {
 
+    let path: string;
     let base: string = getBase();
     let port: number = getPort();
     let command: string = getCommand();
 
-    let path = cutFileUri(uri.fsPath);
-    path = getHttpPath(port, base, path);
+    path = cutFileUri(uri.fsPath);
+    path = getFullHttpPath(port, base, path);
 
     const inUse = await tcpPortUsed.check(port, '127.0.0.1');
     if (!inUse) {

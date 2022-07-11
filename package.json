@@ -2,7 +2,7 @@
   "name": "openthisvuepresspage",
   "displayName": "OpenThisVuepressPage",
   "description": "You can open the web page corresponding to currently opened markdown file.",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "publisher": "SummerGua",
   "repository": "https://github.com/SummerGua/OpenThisVuepressPage",
   "engines": {
@@ -23,7 +23,12 @@
     "commands": [
       {
         "command": "openthisvuepresspage.openActivePage",
-        "title": "Open This Vuepress Page In Default Browser"
+        "title": "Open This Vuepress Page In Default Browser",
+        "category": "Markdown",
+        "icon": {
+          "light": "./media/icon-light.svg",
+          "dark": "./media/icon-light.svg"
+        }
       },
       {
         "command": "openthisvuepresspage.openExplorer",
@@ -43,6 +48,13 @@
           "when": "resourceLangId == markdown",
           "command": "openthisvuepresspage.openExplorer",
           "group": "open-this-vuepress-page"
+        }
+      ],
+      "editor/title": [
+        {
+          "when": "resourceLangId == markdown",
+          "command": "openthisvuepresspage.openActivePage",
+          "group": "navigation"
         }
       ]
     },

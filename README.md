@@ -26,6 +26,10 @@ Add more function:
 1. Right-click the markdown file in explorer
 2. Auto run command if the project hasn't been run
 
-## 2.0.1
+## 2.1.0
 
 Better Code
+
+## 2.2.0
+
+Add icon to editor title area
